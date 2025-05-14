@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 2e7b11d6712111440834cb098dd5415a
+timeCreated: 1471393732
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 69684
+  packageName: Toon Soldiers Demo
+  packageVersion: 1.0
+  assetPath: Assets/ToonSoldiers_demo/models/Materials/basic_soldier_blue.mat
+  uploadId: 132747
