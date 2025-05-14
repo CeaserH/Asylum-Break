@@ -22,10 +22,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private int shootDist = 100;
 
     [Header("Audio")]
-    [SerializeField] private AudioClip[] audSteps;
-    [Range(0, 1)][SerializeField] private float audStepsVol = 0.9f;
-    [SerializeField] private AudioClip[] audJump;
-    [Range(0, 1)][SerializeField] private float audJumpVol = 0.9f;
+    [SerializeField] private AudioClip[] audioSteps;
+    [Range(0, 1)][SerializeField] private float audioStepsVol = 0.9f;
+    [SerializeField] private AudioClip[] audioJump;
+    [Range(0, 1)][SerializeField] private float audioJumpVol = 0.9f;
+    [SerializeField] private AudioClip[] audioLand;
+    [Range(0, 1)][SerializeField] private float audioLandVol = 0.9f;
 
     private float stepTimer;
     private int jumpCount;
@@ -34,12 +36,14 @@ public class PlayerController : MonoBehaviour
     private bool isSprinting;
     private bool isJumped;
     private bool isPlayingStep;
+    private bool wasGrounded;
 
     void Update()
     {
         Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDist, Color.red);
         Move();
         HandleSprint();
+        HandleLanding();
     }
 
     void Move()
@@ -68,7 +72,7 @@ public class PlayerController : MonoBehaviour
     IEnumerator PlaySteps()
     {
         isPlayingStep = true;
-        aud.PlayOneShot(audSteps[Random.Range(0, audSteps.Length)], audStepsVol);
+        aud.PlayOneShot(audioSteps[Random.Range(0, audioSteps.Length)], audioStepsVol);
 
         if (!isSprinting)
             yield return new WaitForSeconds(0.5f);
@@ -93,7 +97,16 @@ public class PlayerController : MonoBehaviour
             jumpCount++;
             playerVel.y = jumpForce;
             isJumped = true;
-            aud.PlayOneShot(audJump[Random.Range(0, audJump.Length)], audJumpVol);
+            aud.PlayOneShot(audioJump[Random.Range(0, audioJump.Length)], audioJumpVol);
         }
+    }
+    void HandleLanding()
+    {
+        if (isJumped && controller.isGrounded && audioLand.Length > 0)
+        {
+            aud.PlayOneShot(audioLand[Random.Range(0, audioLand.Length)], audioLandVol);
+            isJumped = false;
+        }
+        wasGrounded = controller.isGrounded;
     }
 }
