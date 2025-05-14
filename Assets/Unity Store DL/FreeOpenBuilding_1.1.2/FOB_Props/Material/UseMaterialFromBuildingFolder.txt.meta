@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 1866a916c4dfb594c97ede2d72488bb7
+timeCreated: 1624550163
+licenseType: Store
+TextScriptImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 112907
+  packageName: Free Open Building
+  packageVersion: 1.2
+  assetPath: Assets/FreeOpenBuilding_1.1.2/FOB_Props/Material/UseMaterialFromBuildingFolder.txt
+  uploadId: 556755

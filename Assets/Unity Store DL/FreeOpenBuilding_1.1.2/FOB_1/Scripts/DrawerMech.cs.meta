@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: 357d07ab073a44b49a1e234fb56ae132
+timeCreated: 1624493828
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 112907
+  packageName: Free Open Building
+  packageVersion: 1.2
+  assetPath: Assets/FreeOpenBuilding_1.1.2/FOB_1/Scripts/DrawerMech.cs
+  uploadId: 556755

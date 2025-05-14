@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 657f00d706895445aa1ebef9dd9a07a2
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 217901
+  packageName: Rusty Barricade - with PBR materials (2K/4K)
+  packageVersion: 1.0.1
+  assetPath: Assets/Rusty Barricade/Materials/URP/Type 02/Rusty Barricade 4K T2 U.mat
+  uploadId: 492351

@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 314a67329e024b64cb503e36002b64fe
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 112907
+  packageName: Free Open Building
+  packageVersion: 1.2
+  assetPath: Assets/FreeOpenBuilding_1.1.2/PostProcessing/PostProcessingVolume.prefab
+  uploadId: 556755

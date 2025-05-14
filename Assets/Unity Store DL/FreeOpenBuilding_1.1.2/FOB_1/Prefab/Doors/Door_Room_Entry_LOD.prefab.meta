@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 3acebf565e4af6f4aa857911f651ba14
+timeCreated: 1588277168
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 112907
+  packageName: Free Open Building
+  packageVersion: 1.2
+  assetPath: Assets/FreeOpenBuilding_1.1.2/FOB_1/Prefab/Doors/Door_Room_Entry_LOD.prefab
+  uploadId: 556755

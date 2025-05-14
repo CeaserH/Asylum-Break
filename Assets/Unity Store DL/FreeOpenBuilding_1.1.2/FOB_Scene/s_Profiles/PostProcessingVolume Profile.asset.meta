@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 1725b74ada8272a4facb78a50025cbcd
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 112907
+  packageName: Free Open Building
+  packageVersion: 1.2
+  assetPath: Assets/FreeOpenBuilding_1.1.2/FOB_Scene/s_Profiles/PostProcessingVolume
+    Profile.asset
+  uploadId: 556755
