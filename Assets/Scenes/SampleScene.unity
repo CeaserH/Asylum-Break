@@ -4749,12 +4749,16 @@ MonoBehaviour:
   shootDamage: 10
   shootRate: 0.25
   shootDist: 100
-  audSteps:
+  audioSteps:
   - {fileID: 8300000, guid: 5461cae585b64f64089805f0d313bc84, type: 3}
-  audStepsVol: 0.9
-  audJump:
-  - {fileID: 8300000, guid: 80d4ea7778bc3d9459d9fcea672afcee, type: 3}
-  audJumpVol: 0.9
+  audioStepsVol: 0.9
+  audioJump:
+  - {fileID: 8300000, guid: 4a9dae10cfb58b945adc19f11d583aa7, type: 3}
+  - {fileID: 8300000, guid: 314755392aa072e4eb6fc3b02b791b72, type: 3}
+  audioJumpVol: 0.9
+  audioLand:
+  - {fileID: 8300000, guid: 3e10d68c7f7aa854694549c916e8ba46, type: 3}
+  audioLandVol: 0.9
 --- !u!82 &975107441
 AudioSource:
   m_ObjectHideFlags: 0
