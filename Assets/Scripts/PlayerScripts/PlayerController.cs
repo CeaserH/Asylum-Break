@@ -1,10 +1,13 @@
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 
 public class PlayerController : MonoBehaviour
 {
     [Header("Components")]
     [SerializeField] private CharacterController controller;
     [SerializeField] private LayerMask ignoreLayer;
+    [SerializeField] private AudioSource aud;
 
     [Header("Movement Settings")]
     [SerializeField] private float walkSpeed = 5f;
@@ -18,11 +21,19 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float shootRate = 0.25f;
     [SerializeField] private int shootDist = 100;
 
-    private float shootTimer;
+    [Header("Audio")]
+    [SerializeField] private AudioClip[] audSteps;
+    [Range(0, 1)][SerializeField] private float audStepsVol = 0.9f;
+    [SerializeField] private AudioClip[] audJump;
+    [Range(0, 1)][SerializeField] private float audJumpVol = 0.9f;
+
+    private float stepTimer;
     private int jumpCount;
     private Vector3 moveDir;
     private Vector3 playerVel;
     private bool isSprinting;
+    private bool isJumped;
+    private bool isPlayingStep;
 
     void Update()
     {
@@ -33,36 +44,46 @@ public class PlayerController : MonoBehaviour
 
     void Move()
     {
-        shootTimer += Time.deltaTime;
-
         if (controller.isGrounded)
         {
+            isJumped = false;
             jumpCount = 0;
             playerVel = Vector3.zero;
         }
 
-        // Handle input movement
-        moveDir = (Input.GetAxis("Horizontal") * transform.right) + (Input.GetAxis("Vertical") * transform.forward);
+        moveDir = (Input.GetAxis("Horizontal") * transform.right) +
+                  (Input.GetAxis("Vertical") * transform.forward);
         float currentSpeed = isSprinting ? walkSpeed * sprintMultiplier : walkSpeed;
         controller.Move(moveDir * currentSpeed * Time.deltaTime);
 
         HandleJump();
 
-        // Apply gravity
         controller.Move(playerVel * Time.deltaTime);
         playerVel.y -= gravity * Time.deltaTime;
+
+        if (controller.isGrounded && moveDir.magnitude > 0.3f && !isPlayingStep)
+            StartCoroutine(PlaySteps());
+    }
+
+    IEnumerator PlaySteps()
+    {
+        isPlayingStep = true;
+        aud.PlayOneShot(audSteps[Random.Range(0, audSteps.Length)], audStepsVol);
+
+        if (!isSprinting)
+            yield return new WaitForSeconds(0.5f);
+        else
+            yield return new WaitForSeconds(0.3f);
+
+        isPlayingStep = false;
     }
 
     void HandleSprint()
     {
         if (Input.GetButtonDown("Sprint"))
-        {
             isSprinting = true;
-        }
         else if (Input.GetButtonUp("Sprint"))
-        {
             isSprinting = false;
-        }
     }
 
     void HandleJump()
@@ -71,6 +92,8 @@ public class PlayerController : MonoBehaviour
         {
             jumpCount++;
             playerVel.y = jumpForce;
+            isJumped = true;
+            aud.PlayOneShot(audJump[Random.Range(0, audJump.Length)], audJumpVol);
         }
     }
 }
