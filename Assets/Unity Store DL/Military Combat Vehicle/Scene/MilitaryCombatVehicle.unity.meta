@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: e98ac1cb15dbba0499769f77894f8de5
+timeCreated: 1485057442
+licenseType: Store
+DefaultImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 81155
+  packageName: Military Combat Vehicle
+  packageVersion: 1.1
+  assetPath: Assets/Military Combat Vehicle/Scene/MilitaryCombatVehicle.unity
+  uploadId: 588316
