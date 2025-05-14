@@ -19,7 +19,11 @@ public class PlayerController : MonoBehaviour
     [Header("Shooting Settings")]
     [SerializeField] private int shootDamage = 10;
     [SerializeField] private float shootRate = 0.25f;
-    [SerializeField] private int shootDist = 100;
+    [SerializeField] private float shootDist = 100f;
+    [SerializeField] private AudioClip audioShoot;
+    [Range(0, 1)][SerializeField] private float audioShootVol = 1f;
+    [SerializeField] private GameObject muzzleFlashPrefab;
+    [SerializeField] private GameObject impactEffectPrefab;
 
     [Header("Audio")]
     [SerializeField] private AudioClip[] audioSteps;
@@ -37,6 +41,8 @@ public class PlayerController : MonoBehaviour
     private bool isJumped;
     private bool isPlayingStep;
     private bool wasGrounded;
+    private float shootCooldown = 0f;
+    private bool isShooting;
 
     void Update()
     {
@@ -44,6 +50,43 @@ public class PlayerController : MonoBehaviour
         Move();
         HandleSprint();
         HandleLanding();
+        shootCooldown -= Time.deltaTime;
+        HandleShooting();
+    }
+
+    void HandleShooting()
+    {
+        if (Input.GetButton("Fire1") && shootCooldown <= 0f)
+        {
+            shootCooldown = shootRate;
+            Shoot();
+        }
+    }
+
+    void Shoot()
+    {
+        if (audioShoot != null)
+            aud.PlayOneShot(audioShoot, audioShootVol);
+
+        Vector3 origin = Camera.main.transform.position;
+        Vector3 dir = Camera.main.transform.forward;
+
+        if (muzzleFlashPrefab != null)
+        {
+            var m = Instantiate(muzzleFlashPrefab, origin + dir * 0.5f, Quaternion.LookRotation(dir));
+            Destroy(m, 0.1f);
+        }
+
+        Ray ray = new Ray(origin, dir);
+        if (Physics.Raycast(ray, out RaycastHit hit, shootDist, ~ignoreLayer))
+        {
+            if (impactEffectPrefab != null)
+            {
+                var i = Instantiate(impactEffectPrefab, hit.point, Quaternion.LookRotation(hit.normal));
+                Destroy(i, 2f);
+            }
+
+        }
     }
 
     void Move()
@@ -73,12 +116,10 @@ public class PlayerController : MonoBehaviour
     {
         isPlayingStep = true;
         aud.PlayOneShot(audioSteps[Random.Range(0, audioSteps.Length)], audioStepsVol);
-
         if (!isSprinting)
             yield return new WaitForSeconds(0.5f);
         else
             yield return new WaitForSeconds(0.3f);
-
         isPlayingStep = false;
     }
 
@@ -100,13 +141,15 @@ public class PlayerController : MonoBehaviour
             aud.PlayOneShot(audioJump[Random.Range(0, audioJump.Length)], audioJumpVol);
         }
     }
+
     void HandleLanding()
     {
         if (isJumped && controller.isGrounded && audioLand.Length > 0)
-        {
             aud.PlayOneShot(audioLand[Random.Range(0, audioLand.Length)], audioLandVol);
+
+        if (controller.isGrounded)
             isJumped = false;
-        }
+
         wasGrounded = controller.isGrounded;
     }
 }

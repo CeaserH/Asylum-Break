@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebfa0547888791944bab14beb6c35cc3, type: 3}
+  m_Name: AK74
+  m_EditorClassIdentifier: 
+  gunModel: {fileID: 1487774384131766, guid: ee329c3cd08e58645834d20702d7f6c6, type: 3}
+  shootDamage: 1
+  shootRate: 0.1
+  shootDist: 15
+  ammoCur: 3
+  ammoMax: 3
+  hitEffect: {fileID: 7226583673155636403, guid: 84a1883aa4d9162488f587d41ae5b4fc, type: 3}
+  shootSound: []
+  shootVol: 0
