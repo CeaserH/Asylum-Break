@@ -7,10 +7,10 @@ public class playerController : MonoBehaviour, IDamage
     [SerializeField] CharacterController controller;
 
     [Header("----Stats----")]
-    [Range(1, 10)][SerializeField] int HP = 10;
-    [SerializeField] float speed = 5f;
-    [SerializeField] float jumpSpeed = 10f;
-    [SerializeField] float gravity = 20f;
+    [SerializeField] int HP;
+    [SerializeField] float speed;
+    [SerializeField] float jumpSpeed;
+    [SerializeField] float gravity;
 
     Vector3 moveDir;
     Vector3 playerVel;
