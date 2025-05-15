@@ -11,6 +11,10 @@ public class gunStats : ScriptableObject
     [Range(0.1f, 10)] public float shootRate;
     [Range(15, 1000)] public int shootDist;
     [Range(3, 30)] public int ammoCur, ammoMax;
+    public float reloadTime = 2.0f;
+    public AudioClip reloadSound;
+    public float autoFireRate = 0.08f;
+    public float semiFireRate = 0.3f;
 
     public ParticleSystem hitEffect;
     public AudioClip[] shootSound;

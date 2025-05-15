@@ -52,6 +52,9 @@ public class PlayerController : MonoBehaviour
     private bool isShooting;
     private bool isAutomaticMode;
 
+    private bool isReloading = false;
+    private Coroutine reloadCoroutine;
+
     int HPOrig;
     public int XP;
 
@@ -76,14 +79,37 @@ public class PlayerController : MonoBehaviour
         if (gunList.Count == 0) return;
         gunStats currentGun = gunList[gunList.Count - 1];
 
+        if (isReloading) return;
+
         bool fireInput = isAutomaticMode ? Input.GetButton("Fire1") : Input.GetButtonDown("Fire1");
 
         if (fireInput && shootCooldown <= 0f)
         {
-            shootCooldown = currentGun.shootRate;
-            Shoot();
+
+            if (currentGun.ammoCur > 0)
+            {
+                shootCooldown = isAutomaticMode ? currentGun.autoFireRate : currentGun.semiFireRate;
+                Shoot();
+                currentGun.ammoCur--;
+
+                if (currentGun.ammoCur <= 0)
+                {
+
+                    reloadCoroutine = StartCoroutine(ReloadRoutine(currentGun));
+                }
+            }
+            else
+            {
+                if (reloadCoroutine == null) reloadCoroutine = StartCoroutine(ReloadRoutine(currentGun));
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.R) && currentGun.ammoCur < currentGun.ammoMax && !isReloading)
+        {
+            reloadCoroutine = StartCoroutine(ReloadRoutine(currentGun));
         }
     }
+
 
     void Shoot()
     {
@@ -164,6 +190,17 @@ public class PlayerController : MonoBehaviour
             yield return new WaitForSeconds(0.3f);
         isPlayingStep = false;
     }
+
+    IEnumerator ReloadRoutine(gunStats gun)
+    {
+        isReloading = true;
+        if (gun.reloadSound != null) aud.PlayOneShot(gun.reloadSound, 0.8f);
+        yield return new WaitForSeconds(gun.reloadTime);
+        gun.ammoCur = gun.ammoMax;
+        isReloading = false;
+        reloadCoroutine = null;
+    }
+
 
     void HandleSprint()
     {
