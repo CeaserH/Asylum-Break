@@ -4,6 +4,12 @@ using System.Collections.Generic;
 
 public class PlayerController : MonoBehaviour
 {
+
+
+    [Header("Stats")]
+    [Range(1, 10)][SerializeField] int HP;
+
+
     [Header("Components")]
     [SerializeField] private CharacterController controller;
     [SerializeField] private LayerMask ignoreLayer;
@@ -16,7 +22,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float jumpForce = 8f;
     [SerializeField] private float gravity = 20f;
 
-    [Header("Shooting Settings")]
+    [Header("Weapons Settings")]
+    [SerializeField] List<gunStats> gunList = new List<gunStats>();
     [SerializeField] private int shootDamage = 10;
     [SerializeField] private float shootRate = 0.25f;
     [SerializeField] private float shootDist = 100f;
@@ -24,6 +31,7 @@ public class PlayerController : MonoBehaviour
     [Range(0, 1)][SerializeField] private float audioShootVol = 1f;
     [SerializeField] private GameObject muzzleFlashPrefab;
     [SerializeField] private GameObject impactEffectPrefab;
+    [SerializeField] GameObject gunModel;
 
     [Header("Audio")]
     [SerializeField] private AudioClip[] audioSteps;
@@ -32,6 +40,9 @@ public class PlayerController : MonoBehaviour
     [Range(0, 1)][SerializeField] private float audioJumpVol = 0.9f;
     [SerializeField] private AudioClip[] audioLand;
     [Range(0, 1)][SerializeField] private float audioLandVol = 0.9f;
+    [SerializeField] private AudioClip audioHurt;
+    [Range(0, 1)][SerializeField] private float audioHurtVol = 0.9f;
+
 
     private float stepTimer;
     private int jumpCount;
@@ -44,6 +55,10 @@ public class PlayerController : MonoBehaviour
     private float shootCooldown = 0f;
     private bool isShooting;
 
+
+    int HPOrig;
+    public int XP;
+
     void Update()
     {
         Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDist, Color.red);
@@ -52,6 +67,7 @@ public class PlayerController : MonoBehaviour
         HandleLanding();
         shootCooldown -= Time.deltaTime;
         HandleShooting();
+        HPOrig = HP;
     }
 
     void HandleShooting()
@@ -63,10 +79,23 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+
+ 
     void Shoot()
     {
-        if (audioShoot != null)
-            aud.PlayOneShot(audioShoot, audioShootVol);
+        isShooting = true;
+
+
+        if (gunList.Count == 0) return;
+        gunStats currentGun = gunList[gunList.Count - 1]; // Last picked up, or add a selectedGun index
+
+
+        // Ammo management For when Player UI is up and running
+         //ammoCur--;
+         //updatePlayerUI();
+
+        if (currentGun.shootSound != null && currentGun.shootSound.Length > 0)
+            aud.PlayOneShot(currentGun.shootSound[Random.Range(0, currentGun.shootSound.Length)], currentGun.shootVol);
 
         Vector3 origin = Camera.main.transform.position;
         Vector3 dir = Camera.main.transform.forward;
@@ -78,15 +107,29 @@ public class PlayerController : MonoBehaviour
         }
 
         Ray ray = new Ray(origin, dir);
-        if (Physics.Raycast(ray, out RaycastHit hit, shootDist, ~ignoreLayer))
+        if (Physics.Raycast(ray, out RaycastHit hit, currentGun.shootDist, ~ignoreLayer))
         {
-            if (impactEffectPrefab != null)
+            if (currentGun.hitEffect != null)
             {
-                var i = Instantiate(impactEffectPrefab, hit.point, Quaternion.LookRotation(hit.normal));
+                var i = Instantiate(currentGun.hitEffect, hit.point, Quaternion.LookRotation(hit.normal));
                 Destroy(i, 2f);
             }
-
+            IDamage dmg = hit.collider.GetComponent<IDamage>();
+            if (dmg != null)
+                dmg.takeDamage(currentGun.shootDamage);
         }
+    }
+
+
+    public void getGunStats(gunStats gun)
+    {
+        gunList.Add(gun);
+        shootDamage = gun.shootDamage;
+        shootDist = gun.shootDist;
+        shootRate = gun.shootRate;
+
+        gunModel.GetComponent<MeshFilter>().sharedMesh = gun.gunModel.GetComponent<MeshFilter>().sharedMesh;
+        gunModel.GetComponent<MeshRenderer>().sharedMaterial = gun.gunModel.GetComponent<MeshRenderer>().sharedMaterial;
     }
 
     void Move()
@@ -152,4 +195,17 @@ public class PlayerController : MonoBehaviour
 
         wasGrounded = controller.isGrounded;
     }
+
+    public void TakeDamage(int amount)
+    {
+        HP -= amount;
+    }
+
+
+    //public void updatePlayerUI()
+    //{
+        
+
+    //}
+
 }

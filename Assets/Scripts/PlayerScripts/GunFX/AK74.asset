@@ -13,11 +13,12 @@ MonoBehaviour:
   m_Name: AK74
   m_EditorClassIdentifier: 
   gunModel: {fileID: 1487774384131766, guid: ee329c3cd08e58645834d20702d7f6c6, type: 3}
-  shootDamage: 1
-  shootRate: 0.1
-  shootDist: 15
+  shootDamage: 10
+  shootRate: 1.5
+  shootDist: 25
   ammoCur: 3
   ammoMax: 3
-  hitEffect: {fileID: 7226583673155636403, guid: 84a1883aa4d9162488f587d41ae5b4fc, type: 3}
-  shootSound: []
-  shootVol: 0
+  hitEffect: {fileID: 5024009746357069192, guid: ec3f674830402cc45bce805cf6493db7, type: 3}
+  shootSound:
+  - {fileID: 8300000, guid: f3c593214e7d70340b36e9721f3fc718, type: 3}
+  shootVol: 0.25
