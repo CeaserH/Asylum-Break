@@ -4,11 +4,8 @@ using System.Collections.Generic;
 
 public class PlayerController : MonoBehaviour
 {
-
-
     [Header("Stats")]
     [Range(1, 10)][SerializeField] int HP;
-
 
     [Header("Components")]
     [SerializeField] private CharacterController controller;
@@ -16,11 +13,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private AudioSource aud;
 
     [Header("Movement Settings")]
-    [SerializeField] private float walkSpeed = 5f;
-    [SerializeField] private float sprintMultiplier = 1.5f;
-    [SerializeField] private int jumpMax = 2;
-    [SerializeField] private float jumpForce = 8f;
-    [SerializeField] private float gravity = 20f;
+    [SerializeField] private float walkSpeed;
+    [SerializeField] private float sprintMultiplier;
+    [SerializeField] private int jumpMax;
+    [SerializeField] private float jumpForce;
+    [SerializeField] private float gravity;
 
     [Header("Weapons Settings")]
     [SerializeField] List<gunStats> gunList = new List<gunStats>();
@@ -43,7 +40,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private AudioClip audioHurt;
     [Range(0, 1)][SerializeField] private float audioHurtVol = 0.9f;
 
-
     private float stepTimer;
     private int jumpCount;
     private Vector3 moveDir;
@@ -54,7 +50,7 @@ public class PlayerController : MonoBehaviour
     private bool wasGrounded;
     private float shootCooldown = 0f;
     private bool isShooting;
-
+    private bool isAutomaticMode;
 
     int HPOrig;
     public int XP;
@@ -68,31 +64,33 @@ public class PlayerController : MonoBehaviour
         shootCooldown -= Time.deltaTime;
         HandleShooting();
         HPOrig = HP;
+
+        if (Input.GetKeyDown("FireMode"))
+        {
+            ToggleFireMode();
+        }
     }
 
     void HandleShooting()
     {
-        if (Input.GetButton("Fire1") && shootCooldown <= 0f)
+        if (gunList.Count == 0) return;
+        gunStats currentGun = gunList[gunList.Count - 1];
+
+        bool fireInput = currentGun.isAutomaticDefault ? Input.GetButton("Fire1") : Input.GetButtonDown("Fire1");
+
+        if (fireInput && shootCooldown <= 0f)
         {
-            shootCooldown = shootRate;
+            shootCooldown = currentGun.shootRate;
             Shoot();
         }
     }
 
-
- 
     void Shoot()
     {
         isShooting = true;
 
-
         if (gunList.Count == 0) return;
-        gunStats currentGun = gunList[gunList.Count - 1]; // Last picked up, or add a selectedGun index
-
-
-        // Ammo management For when Player UI is up and running
-         //ammoCur--;
-         //updatePlayerUI();
+        gunStats currentGun = gunList[gunList.Count - 1];
 
         if (currentGun.shootSound != null && currentGun.shootSound.Length > 0)
             aud.PlayOneShot(currentGun.shootSound[Random.Range(0, currentGun.shootSound.Length)], currentGun.shootVol);
@@ -120,13 +118,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-
     public void GetGunStats(gunStats gun)
     {
         gunList.Add(gun);
         shootDamage = gun.shootDamage;
         shootDist = gun.shootDist;
         shootRate = gun.shootRate;
+
+        isAutomaticMode = gun.isAutomaticDefault;
 
         gunModel.GetComponent<MeshFilter>().sharedMesh = gun.gunModel.GetComponent<MeshFilter>().sharedMesh;
         gunModel.GetComponent<MeshRenderer>().sharedMaterial = gun.gunModel.GetComponent<MeshRenderer>().sharedMaterial;
@@ -196,16 +195,18 @@ public class PlayerController : MonoBehaviour
         wasGrounded = controller.isGrounded;
     }
 
-    public void TakeDamage(int amount)
+    void ToggleFireMode()
+    {
+        if (gunList.Count == 0) return;
+        gunStats currentGun = gunList[gunList.Count - 1];
+
+        // Only allow switching if enabled
+        if (currentGun.canSwitchFireMode)
+            isAutomaticMode = !isAutomaticMode;
+    }
+
+    public void TakeDamage(int amount)// Waiting on UI implementation
     {
         HP -= amount;
     }
-
-
-    //public void updatePlayerUI()
-    //{
-        
-
-    //}
-
 }
