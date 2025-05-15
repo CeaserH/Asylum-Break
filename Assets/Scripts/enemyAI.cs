@@ -26,20 +26,28 @@ public class ZombieAI : MonoBehaviour
     {
         if (player == null) return;
 
-        // Always chase the player
-        agent.SetDestination(player.position);
+        float distance = Vector3.Distance(transform.position, player.position);
 
-        // Trigger walking animation based on movement
+        if (distance > attackRange)
+        {
+            agent.isStopped = false;
+            agent.SetDestination(player.position);
+        }
+        else
+        {
+            agent.isStopped = true;
+
+            FacePlayer();
+
+            if (Time.time - lastAttackTime >= attackCooldown)
+            {
+                Attack();
+                lastAttackTime = Time.time;
+            }
+        }
+
         if (anim != null)
             anim.SetBool("isWalking", agent.velocity.magnitude > 0.1f);
-
-        // Check distance to player and attack if close enough
-        float distance = Vector3.Distance(transform.position, player.position);
-        if (distance <= attackRange && Time.time - lastAttackTime >= attackCooldown)
-        {
-            Attack();
-            lastAttackTime = Time.time;
-        }
     }
 
     void Attack()
@@ -48,7 +56,7 @@ public class ZombieAI : MonoBehaviour
             anim.SetTrigger("attack");
 
         // Here you can apply damage to the player if a health script is available
-        Debug.Log("Zombie ataca");
+        Debug.Log("Zombie is attacking");
     }
 
     public void TakeDamage(int amount)
@@ -68,5 +76,12 @@ public class ZombieAI : MonoBehaviour
         // Disable NavMeshAgent to stop movement after death
         agent.enabled = false;
         Destroy(gameObject, 2f); // Destroy the zombie after 2 seconds
+    }
+
+    void FacePlayer()
+    {
+        Vector3 direction = (player.position - transform.position).normalized;
+        Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
+        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
     }
 }
