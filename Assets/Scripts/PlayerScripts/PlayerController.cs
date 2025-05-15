@@ -121,7 +121,7 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    public void getGunStats(gunStats gun)
+    public void GetGunStats(gunStats gun)
     {
         gunList.Add(gun);
         shootDamage = gun.shootDamage;
