@@ -5087,7 +5087,7 @@ MonoBehaviour:
   gravity: 20
   gunList: []
   shootDamage: 10
-  shootRate: 0.25
+  shootRate: 1
   shootDist: 100
   audioShoot: {fileID: 0}
   audioShootVol: 1

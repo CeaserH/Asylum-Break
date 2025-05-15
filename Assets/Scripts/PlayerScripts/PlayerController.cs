@@ -65,11 +65,7 @@ public class PlayerController : MonoBehaviour
         HandleShooting();
         HPOrig = HP;
 
-
-        if (Input.GetKeyDown("FireMode"))
-
-        if (Input.GetKeyDown(KeyCode.B))
-
+        if (Input.GetButtonDown("FireMode"))
         {
             ToggleFireMode();
         }
@@ -80,7 +76,7 @@ public class PlayerController : MonoBehaviour
         if (gunList.Count == 0) return;
         gunStats currentGun = gunList[gunList.Count - 1];
 
-        bool fireInput = currentGun.isAutomaticDefault ? Input.GetButton("Fire1") : Input.GetButtonDown("Fire1");
+        bool fireInput = isAutomaticMode ? Input.GetButton("Fire1") : Input.GetButtonDown("Fire1");
 
         if (fireInput && shootCooldown <= 0f)
         {
