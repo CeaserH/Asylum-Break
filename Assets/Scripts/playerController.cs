@@ -8,9 +8,9 @@ public class playerController : MonoBehaviour, IDamage
 
     [Header("----Stats----")]
     [SerializeField] int HP;
-    [SerializeField] float speed;
-    [SerializeField] float jumpSpeed;
-    [SerializeField] float gravity;
+    [SerializeField] int speed;
+    [SerializeField] int jumpSpeed;
+    [SerializeField] int gravity;
 
     Vector3 moveDir;
     Vector3 playerVel;
