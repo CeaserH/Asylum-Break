@@ -5181,7 +5181,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8efced7e579959846803a0bf90b89921, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HP: 1
+  HP: 10
   controller: {fileID: 975107436}
   ignoreLayer:
     serializedVersion: 2
