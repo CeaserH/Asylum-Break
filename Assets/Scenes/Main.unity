@@ -4976,8 +4976,14 @@ MonoBehaviour:
   audioShoot: {fileID: 8300000, guid: f3c593214e7d70340b36e9721f3fc718, type: 3}
   audioShootVol: 1
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
   muzzleFlashPrefab: {fileID: 991097563}
   impactEffectPrefab: {fileID: 0}
+=======
+  muzzleFlashPrefab: {fileID: 615418745}
+  impactEffectPrefab: {fileID: 0}
+  gunModel: {fileID: 1469337529}
+>>>>>>> Stashed changes
 =======
   muzzleFlashPrefab: {fileID: 615418745}
   impactEffectPrefab: {fileID: 0}
@@ -7962,7 +7968,11 @@ Transform:
   m_PrefabInstance: {fileID: 2059639970}
   m_PrefabAsset: {fileID: 0}
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 --- !u!1001 &2123807849
+=======
+--- !u!1001 &2066638380
+>>>>>>> Stashed changes
 =======
 --- !u!1001 &2066638380
 >>>>>>> Stashed changes
@@ -7973,6 +7983,7 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
     - target: {fileID: 1487774384131766, guid: ee329c3cd08e58645834d20702d7f6c6, type: 3}
       propertyPath: m_Name
@@ -8019,6 +8030,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
 =======
+=======
+>>>>>>> Stashed changes
     - target: {fileID: 1487774384131766, guid: 05768ad1f97a77a4488eb6d30a288805, type: 3}
       propertyPath: m_Name
       value: Gun Pick Up AK
@@ -8067,11 +8080,15 @@ PrefabInstance:
       propertyPath: gun
       value: 
       objectReference: {fileID: 11400000, guid: f1d1f12fe1ec6ab438ac3a906c9c482d, type: 2}
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
     - targetCorrespondingSourceObject: {fileID: 1487774384131766, guid: ee329c3cd08e58645834d20702d7f6c6, type: 3}
       insertIndex: -1
@@ -8082,6 +8099,8 @@ PrefabInstance:
   m_SourcePrefab: {fileID: 100100000, guid: ee329c3cd08e58645834d20702d7f6c6, type: 3}
 --- !u!1 &2123807850 stripped
 =======
+=======
+>>>>>>> Stashed changes
     - targetCorrespondingSourceObject: {fileID: 1487774384131766, guid: 05768ad1f97a77a4488eb6d30a288805, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1759185796}
@@ -8886,7 +8905,11 @@ SceneRoots:
   - {fileID: 1539462021}
   - {fileID: 1718749690}
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
   - {fileID: 2123807849}
+=======
+  - {fileID: 2066638380}
+>>>>>>> Stashed changes
 =======
   - {fileID: 2066638380}
 >>>>>>> Stashed changes
