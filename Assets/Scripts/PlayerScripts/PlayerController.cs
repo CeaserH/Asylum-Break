@@ -110,7 +110,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-
     void Shoot()
     {
         isShooting = true;
@@ -129,6 +128,8 @@ public class PlayerController : MonoBehaviour
             var m = Instantiate(muzzleFlashPrefab, origin + dir * 0.5f, Quaternion.LookRotation(dir));
             Destroy(m, 0.1f);
         }
+
+        Debug.DrawRay(origin, dir * currentGun.shootDist, Color.red, 1f);
 
         Ray ray = new Ray(origin, dir);
         if (Physics.Raycast(ray, out RaycastHit hit, currentGun.shootDist, ~ignoreLayer))
@@ -201,7 +202,6 @@ public class PlayerController : MonoBehaviour
         reloadCoroutine = null;
     }
 
-
     void HandleSprint()
     {
         if (Input.GetButtonDown("Sprint"))
@@ -237,12 +237,11 @@ public class PlayerController : MonoBehaviour
         if (gunList.Count == 0) return;
         gunStats currentGun = gunList[gunList.Count - 1];
 
-        // Only allow switching if enabled
         if (currentGun.canSwitchFireMode)
             isAutomaticMode = !isAutomaticMode;
     }
 
-    public void TakeDamage(int amount)// Waiting on UI implementation
+    public void TakeDamage(int amount)
     {
         HP -= amount;
     }
