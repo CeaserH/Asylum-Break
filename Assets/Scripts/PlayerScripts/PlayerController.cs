@@ -65,7 +65,11 @@ public class PlayerController : MonoBehaviour
         HandleShooting();
         HPOrig = HP;
 
+
         if (Input.GetKeyDown("FireMode"))
+
+        if (Input.GetKeyDown(KeyCode.B))
+
         {
             ToggleFireMode();
         }

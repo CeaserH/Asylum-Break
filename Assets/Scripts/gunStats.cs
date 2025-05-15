@@ -15,5 +15,7 @@ public class gunStats : ScriptableObject
     public ParticleSystem hitEffect;
     public AudioClip[] shootSound;
     [Range(0, 1)] public float shootVol;
+    public bool canSwitchFireMode;
+    public bool isAutomaticDefault;
 
 }
