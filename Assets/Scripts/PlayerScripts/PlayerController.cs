@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private AudioClip audioShoot;
     [Range(0, 1)][SerializeField] private float audioShootVol = 1f;
     [SerializeField] private GameObject muzzleFlashPrefab;
+    [SerializeField] private float muzzleFlashTime = 0.05f;
     [SerializeField] private GameObject impactEffectPrefab;
     [SerializeField] GameObject gunModel;
 
@@ -125,8 +126,7 @@ public class PlayerController : MonoBehaviour
 
         if (muzzleFlashPrefab != null)
         {
-            var m = Instantiate(muzzleFlashPrefab, origin + dir * 0.5f, Quaternion.LookRotation(dir));
-            Destroy(m, 0.1f);
+            StartCoroutine(MuzzleFlashRoutine());
         }
 
         Debug.DrawRay(origin, dir * currentGun.shootDist, Color.red, 1f);
@@ -139,11 +139,24 @@ public class PlayerController : MonoBehaviour
                 var i = Instantiate(currentGun.hitEffect, hit.point, Quaternion.LookRotation(hit.normal));
                 Destroy(i, 2f);
             }
+
+            if (currentGun.bulletHolePrefab != null)
+            {
+                var bulletHole = Instantiate(
+                    currentGun.bulletHolePrefab,
+                    hit.point + hit.normal * 0.01f,
+                    Quaternion.LookRotation(hit.normal)
+                );
+                bulletHole.transform.SetParent(hit.transform);
+                Destroy(bulletHole, 10f);
+            }
+
             IDamage dmg = hit.collider.GetComponent<IDamage>();
             if (dmg != null)
                 dmg.takeDamage(currentGun.shootDamage);
         }
     }
+
 
     public void GetGunStats(gunStats gun)
     {
@@ -245,4 +258,12 @@ public class PlayerController : MonoBehaviour
     {
         HP -= amount;
     }
+
+    IEnumerator MuzzleFlashRoutine()
+    {
+        muzzleFlashPrefab.SetActive(true);
+        yield return new WaitForSeconds(muzzleFlashTime);
+        muzzleFlashPrefab.SetActive(false);
+    }
+
 }
