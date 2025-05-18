@@ -7,6 +7,8 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Stats")]
     [Range(1, 10)][SerializeField] int HP;
+    int HPOrig;
+    public int XP;
 
     [Header("Components")]
     [SerializeField] private CharacterController controller;
@@ -22,9 +24,9 @@ public class PlayerController : MonoBehaviour
 
     [Header("Weapons Settings")]
     [SerializeField] List<gunStats> gunList = new List<gunStats>();
-    [SerializeField] private int shootDamage = 10;
-    [SerializeField] private float shootRate = 0.25f;
-    [SerializeField] private float shootDist = 100f;
+    [SerializeField] private int shootDamage;
+    [SerializeField] private float shootRate;
+    [SerializeField] private float shootDist;
     [SerializeField] private AudioClip audioShoot;
     [Range(0, 1)][SerializeField] private float audioShootVol = 1f;
     [SerializeField] private GameObject muzzleFlashPrefab;
@@ -50,8 +52,6 @@ public class PlayerController : MonoBehaviour
 
 
     //Player
-    int HPOrig;
-    public int XP;
     private float stepTimer;
     private int jumpCount;
     private Vector3 moveDir;
