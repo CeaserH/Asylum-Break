@@ -22,5 +22,4 @@ public class gunStats : ScriptableObject
     [Range(0, 1)] public float shootVol;
     public bool canSwitchFireMode;
     public bool isAutomaticDefault;
-
 }

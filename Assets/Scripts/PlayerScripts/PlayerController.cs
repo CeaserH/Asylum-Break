@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 
 public class PlayerController : MonoBehaviour
 {
@@ -41,6 +42,16 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private AudioClip audioHurt;
     [Range(0, 1)][SerializeField] private float audioHurtVol = 0.9f;
 
+
+    [Header("PlayerView")]
+    [SerializeField] private GameObject armsModel;
+    private Transform currentHipPosition;
+    private Transform currentAdsPosition;
+
+
+    //Player
+    int HPOrig;
+    public int XP;
     private float stepTimer;
     private int jumpCount;
     private Vector3 moveDir;
@@ -50,14 +61,16 @@ public class PlayerController : MonoBehaviour
     private bool isPlayingStep;
     private bool wasGrounded;
     private float shootCooldown = 0f;
+
+    //Weapons
     private bool isShooting;
     private bool isAutomaticMode;
-
     private bool isReloading = false;
     private Coroutine reloadCoroutine;
+    public float adsSpeed;
+    private bool isAiming;
 
-    int HPOrig;
-    public int XP;
+
 
     void Update()
     {
@@ -69,10 +82,25 @@ public class PlayerController : MonoBehaviour
         HandleShooting();
         HPOrig = HP;
 
+        if (armsModel != null)
+        {
+            armsModel.SetActive(gunList.Count > 0);
+        }
+
         if (Input.GetButtonDown("FireMode"))
         {
             ToggleFireMode();
         }
+
+        if (Input.GetButton("Fire2"))
+        {
+            isAiming = true;
+        }
+        else
+        {
+            isAiming = false;
+        }
+        HandleADS();
     }
 
     void HandleShooting()
@@ -169,6 +197,14 @@ public class PlayerController : MonoBehaviour
 
         gunModel.GetComponent<MeshFilter>().sharedMesh = gun.gunModel.GetComponent<MeshFilter>().sharedMesh;
         gunModel.GetComponent<MeshRenderer>().sharedMaterial = gun.gunModel.GetComponent<MeshRenderer>().sharedMaterial;
+
+        currentHipPosition = gunModel.transform.Find("HipPosition");
+        currentAdsPosition = gunModel.transform.Find("ADSPosition");
+
+        if(armsModel != null)
+        {
+            armsModel.SetActive(true);
+        }
     }
 
     void Move()
@@ -265,5 +301,25 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(muzzleFlashTime);
         muzzleFlashPrefab.SetActive(false);
     }
+
+    void HandleADS()
+    {
+        if (currentHipPosition == null || currentAdsPosition == null)
+            return;
+
+        Transform target = isAiming ? currentAdsPosition : currentHipPosition;
+
+        gunModel.transform.localPosition = Vector3.Lerp(
+            gunModel.transform.localPosition,
+            target.localPosition,
+            Time.deltaTime * adsSpeed
+        );
+        gunModel.transform.localRotation = Quaternion.Slerp(
+            gunModel.transform.localRotation,
+            target.localRotation,
+            Time.deltaTime * adsSpeed
+        );
+    }
+
 
 }

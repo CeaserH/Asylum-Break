@@ -44,6 +44,11 @@ public class GameManager : MonoBehaviour
             }
         }
         
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            ToggleCursor();
+        }
+
     }
 
     public void statePause()
@@ -72,5 +77,27 @@ public class GameManager : MonoBehaviour
 #else
         Application.Quit();
 #endif
+    }
+
+
+
+    /*
+     For Debugging Purposes
+    */
+    void ToggleCursor()
+    {
+        if(!isPaused)
+        {
+            if (Cursor.lockState == CursorLockMode.Locked)
+            {
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+            }
+            else
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+            }
+        }
     }
 }
