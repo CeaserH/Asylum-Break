@@ -15,8 +15,8 @@ MonoBehaviour:
   gunModel: {fileID: 1261748888023320, guid: 432643b6e5110004083fdff3e33e490b, type: 3}
   shootDamage: 1
   shootRate: 0.1
-  shootDist: 15
-  ammoCur: 100
+  shootDist: 150
+  ammoCur: 8
   ammoMax: 100
   reloadTime: 7.03
   reloadSound: {fileID: 8300000, guid: d810c5187cee57448af7f2f50d344ccc, type: 3}

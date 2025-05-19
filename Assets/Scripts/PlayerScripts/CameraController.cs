@@ -1,13 +1,15 @@
 using UnityEngine;
 
-public class cameraController : MonoBehaviour
+public class CameraController : MonoBehaviour
 {
-    [SerializeField] int sens;
-    [SerializeField] int lockVertMin, lockVertMax;
-    [SerializeField] bool invertY;
+    public float sens = 100f;
+    public float lockVertMin = -90f;
+    public float lockVertMax = 90f;
+    public bool invertY = false;
+    public Transform playerBody;
 
     //rotate on X axis looks up and down on Y axis, weird thing but REMEMBER THIS!!!
-    float rotX;
+    float rotX = 0f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -23,7 +25,6 @@ public class cameraController : MonoBehaviour
         float mouseX = Input.GetAxis("Mouse X") * sens * Time.deltaTime;
         float mouseY = Input.GetAxis("Mouse Y") * sens * Time.deltaTime;
 
-
         // give option to invert mouse look up and down
         if (invertY)
             rotX += mouseY;
@@ -36,6 +37,6 @@ public class cameraController : MonoBehaviour
         transform.localRotation = Quaternion.Euler(rotX, 0, 0);
 
         // rotate player on y-axis to look left and right
-        transform.parent.Rotate(Vector3.up * mouseX);
+        playerBody.Rotate(Vector3.up * mouseX);
     }
 }
