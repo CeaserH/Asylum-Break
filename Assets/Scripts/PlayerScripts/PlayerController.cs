@@ -49,7 +49,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject armsModel;
     private Transform currentHipPosition;
     private Transform currentAdsPosition;
-    [SerializeField] private BreathingSystem breathingSystem;
+    [SerializeField] private BreathingSystem gunBreathingSim;
+    [SerializeField] private BreathingSystem playerBreathingSim;
 
 
     //Player
@@ -83,9 +84,10 @@ public class PlayerController : MonoBehaviour
         HandleShooting();
         HPOrig = HP;
 
-        if(breathingSystem != null)
+        if(gunBreathingSim & playerBreathingSim != null)
         {
-            breathingSystem.HandleBreathing();
+            gunBreathingSim.HandleBreathing();
+            playerBreathingSim.HandleBreathing();
         }
 
         if (armsModel != null)
