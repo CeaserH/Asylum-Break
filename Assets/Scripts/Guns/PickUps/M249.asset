@@ -16,7 +16,7 @@ MonoBehaviour:
   shootDamage: 1
   shootRate: 0.1
   shootDist: 15
-  ammoCur: 33
+  ammoCur: 100
   ammoMax: 100
   reloadTime: 7.03
   reloadSound: {fileID: 8300000, guid: d810c5187cee57448af7f2f50d344ccc, type: 3}
@@ -26,6 +26,6 @@ MonoBehaviour:
   hitEffect: {fileID: 970440554703164915, guid: 47096eff328e11a418ace7db2d72aa97, type: 3}
   shootSound:
   - {fileID: 8300000, guid: 71f06575fb28cb14d96baf0072bf6c05, type: 3}
-  shootVol: 0.25
+  shootVol: 1
   canSwitchFireMode: 0
   isAutomaticDefault: 1

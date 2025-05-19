@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class pickup : MonoBehaviour
@@ -15,7 +14,11 @@ public class pickup : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            GameManager.instance.playerScript.GetGunStats(gun);
+            PlayerWeaponManager weaponManager = other.GetComponent<PlayerWeaponManager>();
+            if (weaponManager != null)
+            {
+                weaponManager.GetGunStats(gun);
+            }
             Destroy(gameObject);
         }
     }
