@@ -2,15 +2,23 @@ using UnityEngine;
 
 public class BreathingSystem : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public float breathSpeed;
+    public float breathAmount;
+    private Vector3 initialLocalPosition;
+    private float timer;
+
+
     void Start()
     {
-        
+        initialLocalPosition = transform.localPosition;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void HandleBreathing()
     {
-        
+        timer += Time.deltaTime * breathSpeed;
+        float newY = initialLocalPosition.y + Mathf.Sin(timer) * breathAmount;
+        Vector3 localPos = transform.localPosition;
+        localPos.y = newY;
+        transform.localPosition = localPos;
     }
 }

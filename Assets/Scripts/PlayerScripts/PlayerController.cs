@@ -49,6 +49,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject armsModel;
     private Transform currentHipPosition;
     private Transform currentAdsPosition;
+    [SerializeField] private BreathingSystem breathingSystem;
 
 
     //Player
@@ -81,6 +82,11 @@ public class PlayerController : MonoBehaviour
         shootCooldown -= Time.deltaTime;
         HandleShooting();
         HPOrig = HP;
+
+        if(breathingSystem != null)
+        {
+            breathingSystem.HandleBreathing();
+        }
 
         if (armsModel != null)
         {
